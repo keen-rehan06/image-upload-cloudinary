@@ -1,3 +1,5 @@
+import { configDotenv } from "dotenv";
+configDotenv({path:"./.env"})
 import {v2 as cloudinary}  from "cloudinary";
 
 cloudinary.config({
@@ -8,7 +10,3 @@ cloudinary.config({
 
 export default cloudinary;
 
-// export const uploadImage = async (filePath) => {
-//     const result = await cloudinary.uploader.upload(filePath)
-//     return result;
-// }
