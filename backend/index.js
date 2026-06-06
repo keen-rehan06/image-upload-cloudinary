@@ -6,7 +6,6 @@ import cloudinary from "cloudinary";
 import cors from "cors";
 import uploadRoute from "./src/routes/upload.route.js"
 import connectDb from "./src/config/db.config.js"
-
 const app = express();
 
 ;(async()=>{
