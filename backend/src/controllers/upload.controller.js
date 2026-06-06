@@ -1,4 +1,4 @@
-import cloudinary from "../config/cloudinary.config.js";
+import cloudinary from "../services/cloudinary.config.js";
 import fs from "fs";
 import uploadModel from "../models/upload.model.js";
 
@@ -41,12 +41,14 @@ export const uploadFile = async (req, res) => {
     if (filePath && fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
     }
+ console.log("FULL ERROR => ", error);
+  console.log("MESSAGE => ", error.message);
+  console.log("RESPONSE => ", error.response);
 
-    console.error(error);
-
-    res.status(500).send({
-      message: "File Upload Failed!",
-      error: error.message,
-    });
+  res.status(500).send({
+    message: "File Upload Failed!",
+    error: error.message,
+    details: error,
+  });
   }
 };

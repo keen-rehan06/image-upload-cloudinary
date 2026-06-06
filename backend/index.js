@@ -4,9 +4,18 @@ import express from "express";
 import mongoose from "mongoose";
 import cloudinary from "cloudinary";
 import cors from "cors";
-import uploadRoute from "./routes/upload.route.js"
+import uploadRoute from "./src/routes/upload.route.js"
+import connectDb from "./src/config/db.config.js"
 
 const app = express();
+
+;(async()=>{
+    try {
+        await connectDb();
+    } catch (error) {
+        console.log(`MongoDb connection Failed:❌`,error)
+    }
+})()
 
 app.use(express.json({}));
 app.use(express.urlencoded({extended:true}));
