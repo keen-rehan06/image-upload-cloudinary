@@ -37,7 +37,7 @@
       const data = {email,password};
     for(const [key,value] of Object.entries(data)){
       if(typeof value !== "string"){
-        res.status(401).send({message:`${key} must be string!`})
+        return res.status(401).send({message:`${key} must be string!`})
       }
     }
     next()
