@@ -40,7 +40,7 @@
         return res.status(401).send({message:`${key} must be string!`})
       }
     }
-    next()
+    next();
     } catch (error) {
       console.log(error.message);
       return res.status(500).send({ message: "Server Error", error });
