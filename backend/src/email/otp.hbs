@@ -1,0 +1,120 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Password</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f5f7fb;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        .header {
+            background: #2563eb;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .header h2 {
+            margin: 0;
+        }
+
+        .content {
+            padding: 35px;
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .otp-box {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .otp {
+            display: inline-block;
+            padding: 18px 35px;
+            font-size: 34px;
+            font-weight: bold;
+            letter-spacing: 10px;
+            color: #2563eb;
+            background: #eff6ff;
+            border: 2px dashed #2563eb;
+            border-radius: 10px;
+        }
+
+        .info {
+            background: #fff7ed;
+            border-left: 4px solid #f97316;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            color: #666;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #999;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h2>Password Reset Request</h2>
+        </div>
+
+        <div class="content">
+
+            <p>Hello,</p>
+
+            <p>
+                We received a request to reset the password for your account.
+                Use the OTP below to continue the password reset process.
+            </p>
+
+            <div class="otp-box">
+                <div class="otp">{{otp}}</div>
+            </div>
+
+            <p>
+                This OTP will expire in <strong>10 minutes</strong>.
+            </p>
+
+            <div class="info">
+                If you didn't request a password reset, please ignore this email.
+                Your account remains secure.
+            </div>
+
+        </div>
+
+        <div class="footer">
+            © 2026 Webelite Builders. All rights reserved.
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+```
