@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         default:null
     },
+    refreshToken:{
+        type:String,
+        default:null
+    },
     otp:{
      type:String,
      default:null
