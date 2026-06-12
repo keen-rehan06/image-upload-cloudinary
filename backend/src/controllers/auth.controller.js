@@ -7,6 +7,7 @@ import {
   generateAccessToken,
   generateRefreshToken,
 } from "../config/accessRefreshToken.config.js";
+import { SendOtpOnEmail } from "../email/otp.email.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -129,7 +130,7 @@ export const logoutUser = async (req, res) => {
   }
 };
 
-export const forgotPassword = async (req, res) => {
+export const generateOtpForForgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
     if (!email)
@@ -143,18 +144,63 @@ export const forgotPassword = async (req, res) => {
         .send({ message: "User not found!", success: false });
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
+    const token = generateToken(user);
     user.otp = otp;
+    user.token = token;
     user.otpExpiry = otpExpiry;
     await user.save();
-    SendOtpOnEmail(otp,email);
-    return res.status(200).send({message:"OTP sent on The Email!",success:true})
+    SendOtpOnEmail(otp, email);
+    return res
+      .status(200)
+      .cookie("token",token)
+      .send({ message: "OTP sent on The Email!", success: true });
   } catch (error) {
-    return res.status(401).send({meessage:"Failed To send An OTP",success:false,error})
+    console.log(error.message);
+    return res
+      .status(401)
+      .send({ message: "Failed To send An OTP", success: false, error });
   }
 };
 
-// email field banaunga ✅
-// check karungga email hai ya nh ✅
-// email pe otp bhjungga ✅
-// user otp aur db otp match check
-// now change password
+export const confirmOtp = async (req, res) => {
+  try {
+    const { otp } = req.body;
+    if (!otp)
+      return res
+        .status(401)
+        .send({ message: "Otp is required", success: false });
+    const userId = req.user;
+    const user = await userModel.findById(userId.id);
+    if (otp !== user.otp)
+      return res.status(401).send({ message: "Invalid OTP", success: false });
+    if (otp.length < 6)
+      return res
+        .status(401)
+        .send({ message: "OTP must be 6 number.", success: false });
+    user.otp = null;
+    user.otpExpiry = null;
+    await user.save();
+    return res.status(200).send({ message: "OTP Verified", success: true });
+  } catch (error) {
+    return res.status(401).send({ message: error.message, success: false });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+try {
+    const {newPassword,confirmPassword} = req.body;
+    const userId = req.user;
+    const user = await userModel.findById(userId.id);
+    if(!user) return res.status(404).send({message:"User not found",success:false}) 
+    if(!newPassword || !confirmPassword) return res.status(401).send({message:"All fileds are required!",success:false});
+    if(newPassword !== confirmPassword) return res.status(401).send({message:"confirm password does not match",success:false});
+    const hashPassword = await bcrypt.hash(newPassword,10);
+    user.password = hashPassword;
+    user.token = null;
+    await user.save();
+    res.status(200).send({message:"Password Changed SuccessFully",success:true})
+} catch (error) {
+  return res.status(401).send({message:"Failed to Changed Password",error});
+}
+};
+

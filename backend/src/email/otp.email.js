@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 const _filename = fileURLToPath(import.meta.url);
 const _dirname = path.dirname(_filename);
 
-const SendOtpOnEmail = async (otp, email) => {
+export const SendOtpOnEmail = async (otp, email) => {
   try {
     const emailTemplateSource = fs.readFileSync(
       path.join(_dirname, "otp.hbs"),

@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 const _filename = fileURLToPath(import.meta.url);
 const _dirname = path.dirname(_filename);
 
-const verifyEmail = (token, email) => {
+export const verifyEmail = (token, email) => {
   try {
     const emailTemplateSource = fs.readFileSync(
       path.join(_dirname, "template.hbs"),
